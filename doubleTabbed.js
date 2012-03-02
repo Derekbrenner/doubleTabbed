@@ -30,7 +30,7 @@
 //----------------Functions------------------
 //      //Example
 //      var methods = {
-//  		sample1 : function( ) {return this.each(function(){//code})}, 
+//			sample1 : function( ) {return this.each(function(){//code})}, 
 //			sample2 : function( ) {//code}
 //		};
 
@@ -48,10 +48,9 @@
 			var $this=$(this);
 			$this.doubleTabbed("browserSniff",settings);
 			$this.doubleTabbed("createNav");
-
 			var browser=settings.browser
 			if(settings.browser=='normal'){
-				$this.doubleTabbed("regSetup");
+				$this.doubleTabbed("regSetup",settings);
 			}
 			if(settings.browser=='mobile'){
 				$this.doubleTabbed("mobileSetup");
@@ -59,9 +58,6 @@
 			//var for the Navagation to be crated in
 
 		})
-    },
-    show : function( ) {
-      // IS
     },
 //-----------------------------------------------------------
     createNav : function( ) { 
@@ -71,14 +67,14 @@
 //-----------------------------------------------------------
 		return this.each(function(){
 			var $this=$(this);
-			var tabbedNavigation="<ul id='" +$this.attr('id') +"_nav'>";
+			var tabbedNavigation="<ul class='doubleTabbedNav' id='" +$this.attr('id') +"_nav'>";
 			$this.children("div").each(function(){//loops throught all the div in the tab area
-				tabbedNavigation += '<li> <a href="#'+$this.attr('id')+'-'+$(this).attr('title')+'" data-transition="slide">'+$(this).attr('title')+'</a></li>';
+
+				tabbedNavigation += '<li title="'+$(this).attr('title')+'" > <a href="#'+$this.attr('id')+'-'+$(this).attr('title')+'" data-transition="slide">'+$(this).attr('title')+'</a></li>';
 			});
 			
 			tabbedNavigation +="</ul>";
 			$this.find('div:first').before(tabbedNavigation);
-			$this.find('ul#'+$this.attr('id') +'_nav a').bind("click.doubleTabbed", methods.linkClicked);
 		})
     },
 //----------------------------------------------------------
@@ -91,11 +87,55 @@
 			
 		})
     },
+
+	
+//----------------------------------------------------------
+	regSetup : function(settings) {
+//  for copy and paste purposes
+//----------------------------------------------------------
+		//link the style sheet ajax <link rel="stylesheet" type="text/css" href="doubleTabbedStyle.css" />
+		$("head").append("<link>");
+		css = $("head").children(":last");
+		css.attr({
+			rel:  "stylesheet",
+			type: "text/css",
+			href: "doubleTabbedStyle.css"
+		});
+		var $this=$(this);
+		// add a class for css
+		$this.attr('class','doubleTabbed');
+		//class='doubleTabbedNav' to ul nav ------------------------------------------------------------
+		//hide all content
+		$this.children('div').hide();
+		// is there a front page set? or does the front page given exist
+		//  if not set the front page to the first div
+		if(settings.frontPage==''||!($('div[title="'+settings.frontPage+'"]').length)){
+			settings.frontPage=$this.children('div:first').attr('title');
+		}
+		$this.find('div[title="'+settings.frontPage+'"]').show();
+
+		$this.find('li[title="'+settings.frontPage+'"]').attr('class','current');
+		$this.find('ul#'+$this.attr('id') +'_nav a').bind("click.doubleTabbed", methods.linkClicked);
+		//Check if the link clicked is the current page and if there are any transitions running
+		
+	},
+
 //----------------------------------------------------------
 	linkClicked : function(event) {
 //----------------------------------------------------------
-		var $this=$(this);
-		var $target = $(event.target);
+		var $linkClicked=$(this);
+		//this is the div that double tabbed was called on
+		var $navUl=$linkClicked.parent().parent();
+		var $mainDiv=$navUl.parent();
+		var $currentContent=$mainDiv.find('div:visible');
+		var $nextPage=$mainDiv.find('div[title="'+$linkClicked.parent().attr("title")+'"]');
+		if($currentContent.attr("title")!=$linkClicked.parent().attr("title")){
+			$navUl.find('li.current').removeClass('current');
+			$linkClicked.parent().addClass('current');
+			 $currentContent.fadeOut(250, function(){
+			 	$nextPage.fadeIn(250);	
+			 });	
+		}
 	},
 //----------------------------------------------------------
 	browserSniff : function(settings) {
@@ -118,8 +158,8 @@
 //  Lodes the mobile css
 //  loads the mobile jquery
 //  Puts the data-role='page' on each sub div
-// moves content into a content div
-// adds the proper href to all links
+//  moves content into a content div
+//  adds the proper href to all links
 //----------------------------------------------------------
 		//Loads in the needed js and css
 		$("head").append("<link>");
@@ -159,7 +199,7 @@
 			//loop through all links and find the div with a corasponding title
 			//then add the data role page and the id= page name  ie mainDivId_titleOfPage
 			$firstPage.find('[data-role="content"] a').each(function(){//loops throught all the div in the tab area
-				$('[title="'+$(this).text()+'"]').attr("data-role","page").attr('id',$this.attr('id')+'-'+$(this).text());
+				$('div[title="'+$(this).text()+'"]').attr("data-role","page").attr('id',$this.attr('id')+'-'+$(this).text());
 			});
 			//call createMobileContent on all pages exept the nav page
 			$('[data-role="page"]').slice(1).doubleTabbed('createMobileContent',$navPageId);
@@ -170,11 +210,11 @@
 			
 		})
 	},
+
 //----------------------------------------------------------
 	createMobileContent : function($navPageId ) {
 //  Sets up a sub div of the main tabbed div as a mobile page
 //----------------------------------------------------------
-alert($navPageId);
 		return this.each(function(){
 			$this=$(this);
 			//create a div for the content
@@ -188,24 +228,6 @@ alert($navPageId);
 			$this.find('div[data-role="header"]').append($subHeader);
 		})
 	},
-	
-//----------------------------------------------------------
-	regSetup : function() {
-//  for copy and paste purposes
-//----------------------------------------------------------
-		return this.each(function(){
-			var $this=$(this);
-			$this.children('div').hide();
-			// is there a front page set? or does the front page given exist
-			//  if not set the front page to the first div
-			if(settings.frontPage==''||!($('div[title|="'+settings.frontPage+'"]').length)){
-				settings.frontPage=$this.children('div:first').attr('title');
-			}
-			$('div[title|="'+settings.frontPage+'"]').show();
-			//code
-		})
-	},
-	
 
 //----------------------------------------------------------
 	exampleFunction : function( ) {
