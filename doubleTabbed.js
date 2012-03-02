@@ -8,16 +8,30 @@
 // auto convert to a mobile version if a phone is detected.
 //
 // FEATURES
-//   -Works on the class name of a div user specified
+//   -Converts simple html code into tabed content
 //   -Mobile ready
-//   -Included QUnit Test
+//
 // Mobile
 //   - first h1 will be the header
-//   -
+//   -Each page div should have a h1 in it
+//
+// Setup
+//   -paste into head:<script src="http://code.jquery.com/jquery-latest.js"></script>
+//   -paste into head:<script type="text/javascript" src="https://raw.github.com/Derekbrenner/doubleTabbed/master/doubleTabbed.js"></script>
+//   -paste into head:<script type="text/javascript">$("document").ready(function(){$("#yourDivName").doubleTabbed({'frontPage':'Page2'});});</script>
+//   -create a div with an id of your choosing that wraps your content
+//   -change #yourDivName in the last code pasted to the id of your main div
+//   -create sub div's with the title propertie = to the page name
+//   -each div should have an H1 element in it and some content
+//   - make sure fthe css file is in the same directory(CHANGE THIS TO GRAB FROM GIT and option to overide for custom theme)
 //
 //  PROPERTIES (size should probably be css)
-//   -transition: none, fade, hide,slide
-//   -height
+//     WORKING
+//	-browser:  can be set to mobile if you want it to always be mobile
+//	-frontPage:  set it equal to the title of the page you want to be default loaded
+//     Not working
+//	-transition
+//	-mobile theme
 //----------------------------------------------------
 
 
@@ -36,15 +50,16 @@
 
   var methods = {
 //-------------------------------------------
-	  init : function( options ) { 
+	  init : function( options ) {
+//  first function called, checks browser and sets up the tabs
 //-------------------------------------------
-	   var settings = $.extend( {
+	   var settings = $.extend( {//options
 		 'transition': 'fade',
 		 'popout' : 'false',
 		 'frontPage':'',
 		 'browser':'normal'
 	   }, options);
-	  	return this.each(function(){
+	  	return this.each(function(){//for chaining purposes
 			var $this=$(this);
 			$this.doubleTabbed("browserSniff",settings);
 			$this.doubleTabbed("createNav");
@@ -55,7 +70,6 @@
 			if(settings.browser=='mobile'){
 				$this.doubleTabbed("mobileSetup");
 			}
-			//var for the Navagation to be crated in
 
 		})
     },
@@ -91,7 +105,11 @@
 	
 //----------------------------------------------------------
 	regSetup : function(settings) {
-//  for copy and paste purposes
+//  setup for the desk top version
+//  loads in the css for desk top
+//  adds css classes
+//  hides content , shows the front page
+//  binds onClick to nav
 //----------------------------------------------------------
 		//link the style sheet ajax <link rel="stylesheet" type="text/css" href="doubleTabbedStyle.css" />
 		$("head").append("<link>");
@@ -113,22 +131,29 @@
 			settings.frontPage=$this.children('div:first').attr('title');
 		}
 		$this.find('div[title="'+settings.frontPage+'"]').show();
-
+		// sets the current button css
 		$this.find('li[title="'+settings.frontPage+'"]').attr('class','current');
+		// binds onClick to nav
 		$this.find('ul#'+$this.attr('id') +'_nav a').bind("click.doubleTabbed", methods.linkClicked);
-		//Check if the link clicked is the current page and if there are any transitions running
+
 		
 	},
 
 //----------------------------------------------------------
 	linkClicked : function(event) {
+//  manages page transitions and link css
+// called when a link is clicked
 //----------------------------------------------------------
 		var $linkClicked=$(this);
-		//this is the div that double tabbed was called on
+
 		var $navUl=$linkClicked.parent().parent();
+		// $mainDiv this is the div that double tabbed was called on
 		var $mainDiv=$navUl.parent();
+		//finds the current page
 		var $currentContent=$mainDiv.find('div:visible');
+		//page that will be changed to
 		var $nextPage=$mainDiv.find('div[title="'+$linkClicked.parent().attr("title")+'"]');
+		//transitions if all is well
 		if($currentContent.attr("title")!=$linkClicked.parent().attr("title")){
 			$navUl.find('li.current').removeClass('current');
 			$linkClicked.parent().addClass('current');
@@ -139,9 +164,7 @@
 	},
 //----------------------------------------------------------
 	browserSniff : function(settings) {
-//  for copy and paste purposes
-//  would like to extend this to find new browsers and then decide if its mobile or not and add it to a db
-//  perhaps one DB is refrenced for all calls
+// if you are on a phone sets the propertie
 //----------------------------------------------------------
 		if( navigator.userAgent.match(/Android/i) ||
 		 navigator.userAgent.match(/webOS/i) ||
@@ -185,6 +208,7 @@
 			var $header = $('h1:first');
 			$('head').append(headerTag);
 			//Put proper tags in nav
+			// ad the data-role='controlgrup' to the ul nav 
 			$('#'+ $this.attr('id') +'_nav').attr("data-role","controlgroup");
 			$this.find('ul a').attr("data-role","button");
 			
@@ -203,10 +227,8 @@
 			});
 			//call createMobileContent on all pages exept the nav page
 			$('[data-role="page"]').slice(1).doubleTabbed('createMobileContent',$navPageId);
-			//$nav.remove();
 			//content must have the attr data-role="content"
-			//var $dataRole='data-role';
-			// ad the data-role='controlgrup' to the ul nav
+
 			
 		})
 	},
