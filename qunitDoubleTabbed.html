@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+                    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/qunit/git/qunit.css" type="text/css" media="screen" />
+<script src="https://raw.github.com/Derekbrenner/doubleTabbed/master/doubleTabbed.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/qunit/git/qunit.js"></script>
+
+  <script>
+  $(document).ready(function(){
+
+test("createNav test", function() {
+	expect(7);
+	var $elements = jQuery("<div id='test'><div title='1'></div><div title='2'></div><div title='3'></div></div>");
+	$elements.doubleTabbed('createNav');
+	$elements.find('ul').attr('id');//test_nav
+	$elements.find('ul');
+	ok( true, "TEST RUNNING" );
+	equal( $elements.find('ul').attr('id'), "test_nav", "ul id OK" );
+	equal( $elements.find('ul').find('li:first').attr('title'), "1", "first li title OK" );
+	equal( $elements.find('ul').find('li:first').find('a').attr('href'), "#test-1", "first a href OK" );
+	equal( $elements.find('ul').find('li:first').find('a').text(), "1", "first a text ok" );
+	equal( $elements.find('ul').find('li::eq(1)').find('a').attr('href'), "#test-2", "second a href OK" );
+	equal( $elements.find('ul').find('li::eq(2)').find('a').attr('href'), "#test-3", "third a href OK" );
+	
+	//<li title="'+$(this).attr('title')+'" > <a href="#'+$this.attr('id')+'-'+$(this).attr('title')+'" data-transition="slide">'+$(this).attr('title')+'</a></li>
+});
+
+
+test("regSetup test:  Requires createNav", function() {
+	expect(6);
+	var $elements = jQuery("<div id='test'><div title='1'></div><div title='2'></div><div title='3'></div></div>");
+	
+	$elements.doubleTabbed();
+	equal( $('head').find('link:last').attr('href'), "doubleTabbedStyle.css", "css linked" );
+	equal( $elements.find('ul').find('li:first').attr('class'),'current', "First link has class of current" );
+	equal( $elements.find('div:eq(0)').css('display'),'block', "First div is visible" );
+	equal( $elements.find('div:eq(1)').css('display') ,'none', "second div display = none" );
+	equal( $elements.find('div:eq(2)').css('display') ,'none', "second div display = none" );
+	
+	ok( true, "all pass" );
+});
+	asyncTest("a test", function() {
+		expect(4);
+		var $elements = jQuery("<div id='test'><div title='1'>1</div><div title='2'>2</div><div title='3'>3</div></div>");
+		$elements.doubleTabbed();
+		$('body').append($elements);
+		$elements.find('ul').find('li:eq(2)').find('a').doubleTabbed('linkClicked');
+		equal( $elements.find('ul').find('li:eq(2)').attr('class'),'current', "third li has class of current because linked was clicked" );
+		setTimeout(function(){
+			equal( $elements.find('div:eq(0)').css('display'),'none', "first div is none" );
+			equal( $elements.find('div:eq(1)').css('display'),'none', "second div is none" );
+			equal( $elements.find('div:eq(2)').css('display') ,'block', "third div display = block" );
+			start();
+		}, 1000);
+		$elements.remove();
+	});
+
+
+
+
+  });
+  </script>
+  
+</head>
+<body>
+  <h1 id="qunit-header">QUnit example</h1>
+ <h2 id="qunit-banner"></h2>
+ <div id="qunit-testrunner-toolbar"></div>
+ <h2 id="qunit-userAgent"></h2>
+ <ol id="qunit-tests"></ol>
+ <div id="qunit-fixture">test markup, will be hidden</div>
+</body>
+</html>
