@@ -1,1 +1,121 @@
-this is a test
+//----------------------------------------------------
+// Double Tabbed
+// by Derek Brenner
+//
+//
+// Description: J Query plugin that creates an Easy to use tab system that will 
+// auto convert to a mobile version if a phone is detected.
+//
+// FEATURES
+//   -Converts simple html code into tabed content
+//   -Mobile ready
+//
+// Mobile
+//   - first h1 will be the header
+//   -Each page div should have a h1 in it
+//
+// Setup
+//   -paste into head:<script src="http://code.jquery.com/jquery-latest.js"></script>
+//   -paste into head:<script type="text/javascript" src="https://raw.github.com/Derekbrenner/doubleTabbed/master/doubleTabbed.js"></script>
+//   -paste into head:<script type="text/javascript">$("document").ready(function(){$("#yourDivName").doubleTabbed({'frontPage':'yourPageTitle'});});</script>
+//   -create a div with an id of your choosing that wraps your content
+//   -change #yourDivName in the last code pasted to the id of your main div
+//   -change yourPageTitle to the title of the page u want defaut
+//   -create sub div's with the title propertie = to the page name
+//   -each div should have an H1 element in it and some content
+//   - make sure the css file is in the same directory(CHANGE THIS TO GRAB FROM GIT and option to overide for custom theme)
+//
+//  PROPERTIES (size should probably be css)
+//     WORKING
+//	-browser:  can be set to mobile if you want it to always be mobile
+//	-frontPage:  set it equal to the title of the page you want to be default loaded
+//     Not working
+//	-transition
+//	-mobile theme
+//----------------------------------------------------
+
+
+All functions are contained in the var methods.  Example:
+
+var methods = {
+	sample1 : function( ) {return this.each(function(){//code})}, 
+	sample2 : function( ) {//code}
+};
+
+----Functions Documentation:
+
+init : function( options ) {
+	-first function called, checks browser and sets up the tabs
+	-sets up the paramaters
+	-calls the browser sniff to check for a mobile device
+	-calls the create nav
+	-calls either regSetup or mobileStup
+
+createNav : function( ) { 
+	-loops through children div elements of the Main Div
+	-for every child div a <li><a href></a></li> in a <ul>  is made
+		-<li title="pageTitle" > <a href="mainDivId-pageTitle" data-transition="slide">PageTitle</a></li>
+	-the content of each link is the title of a coresponding child div
+
+hide : function( ) { 
+	-simple function for testing
+	
+
+regSetup : function(settings) {
+	-loads in the css for desk top
+		-<link rel="stylesheet" type="text/css" href="doubleTabbedStyle.css" />
+	-adds css classes to the needed elements
+		-class='doubleTabbedNav' to ul nav
+		-sets the current button css class to current
+	-hides content , shows the front page
+		- Checks if there a front page set or does the front page given exist
+		-if not set the front page to the first div
+	-binds onClick to nav which calls he link ckicked function 
+
+linkClicked : function(event) {
+	-Vars
+		-$mainDiv this is the div that double tabbed was called on
+		-$linkClicked
+		-$currentContent is the page being currently displayed
+		-$nextPage page that will be transitioned to
+	-manages page transitions and link css
+	-called when a link is clicked
+
+browserSniff : function(settings) {
+	-if you are on a phone sets the propertie
+	-settings.browser='mobile'; 			
+
+mobileSetup : function( ) {
+	-Lodes the mobile css
+	-loads the mobile jquery:ajax
+	-Puts the data-role='page' on each sub div
+	-moves content into a content div
+	-adds the proper href to all links
+	-Put proper tags in nav
+		-ad the data-role='controlgrup' to the ul nav id=$navPageId,  
+		-$navPageId=MainDivId_mobilenav
+		-loop through all links and find the div with a corasponding title
+		
+	-set up the first page with nav by creating an extra div data-role="page"
+		- also adds header and content div to this
+
+	-loop through all links and find the div with a corasponding title
+	-then add the data role page and the id= page name  ie mainDivId_titleOfPage
+	-call createMobileContent on all pages exept the nav page
+
+
+
+createMobileContent : function($navPageId ) {
+	-Sets up a sub div of the main tabbed div as a mobile page
+		-create a div for the content
+		-then puts everything previously in the sub div inside it
+		-creates a div for the header and puts the any h1 element inside it
+
+exampleFunction : function( ) {
+	-for copy and paste purposes
+
+Control section not in methods var
+	-the method is passed in as an argument to the plugin
+
+end;
+
