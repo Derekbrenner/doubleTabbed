@@ -122,7 +122,6 @@
 		var $this=$(this);
 		// add a class for css
 		$this.attr('class','doubleTabbed');
-		//class='doubleTabbedNav' to ul nav ------------------------------------------------------------
 		//hide all content
 		$this.children('div').hide();
 		// is there a front page set? or does the front page given exist

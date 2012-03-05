@@ -65,7 +65,6 @@ regSetup : function(settings) {
 	-loads in the css for desk top
 		-<link rel="stylesheet" type="text/css" href="doubleTabbedStyle.css" />
 	-adds css classes to the needed elements
-		-class='doubleTabbedNav' to ul nav
 		-sets the current button css class to current
 	-hides content , shows the front page
 		- Checks if there a front page set or does the front page given exist

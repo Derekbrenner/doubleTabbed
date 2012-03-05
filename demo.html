@@ -9,7 +9,7 @@
 <title>Tester</title>
 <!--<link rel="stylesheet" type="text/css" href="doubleTabbedStyle.css" />-->
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script type="text/javascript" src="doubleTabbed.js"></script>
+<script type="text/javascript" src="https://raw.github.com/Derekbrenner/doubleTabbed/master/doubleTabbed.js"></script>
 <script type="text/javascript">
  $("document").ready(function(){
   $("#tabbedSection").doubleTabbed({'frontPage':'Page2'});
@@ -23,9 +23,115 @@
      <h1>Double Tabbed: Jquery Plugin</h1>
        <div title="Description"> <h1>Description</h1><br /> <p>Hello</p> <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p> </div>
        <div title="Usage"> <h1>Usage</h1><br /> Duis venenatis placerat congue. Suspendisse ultrices nibh vel risus placerat tincidunt euismod augue commodo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer non quam at dui ultrices commodo. Donec et tempor enim. Aenean varius lectus ac nibh hendrerit id imperdiet metus condimentum. Nunc sit amet nunc elit, ac pharetra massa. Vestibulum sodales sollicitudin lectus eget vestibulum. Aliquam viverra pretium vestibulum. Sed at lorem purus. Aliquam mollis, risus accumsan fringilla posuere, arcu eros pretium massa, sit amet pharetra dolor felis varius metus. In placerat diam eget dolor tincidunt at rutrum lacus ultrices.Nunc vel varius nunc. Aliquam cursus sagittis eleifend. Sed venenatis, libero ut tincidunt porta, ipsum massa facilisis nulla, sed ultrices nisi quam id enim. Vivamus at mauris est, sed consectetur libero. Donec non nunc lectus, nec cursus tortor. Nam nec augue fringilla urna dictum posuere at nec ante. Ut nec magna nibh, dignissim suscipit lectus. Cras bibendum fringilla laoreet. Aenean ut mi nibh, id tempus velit. Morbi congue lacus eu lectus placerat tincidunt. Nullam aliquet enim ut erat luctus faucibus. Maecenas libero justo, placerat quis dapibus a, venenatis tempus ante. Proin eget erat sem, id varius libero.Praesent pulvinar pharetra varius. Integer non erat porta nunc dictum sodales et at est. Praesent id lobortis metus. Aliquam justo odio, hendrerit at fermentum eu, congue eget enim. Ut sem eros, commodo in varius at, lobortis a enim. Morbi facilisis lectus a massa rutrum suscipit. Aliquam sodales sodales nulla ut congue. Fusce quam dolor, fermentum rhoncus sollicitudin eu, scelerisque id lorem. Maecenas vitae felis sed mauris tincidunt egestas. Maecenas vel lorem libero.  </div>
-       <div title="Documentation"> <h1>Documentation</h1><br />Duis venenatis placerat congue. Suspendisse ultrices nibh vel risus placerat tincidunt euismod augue commodo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer non quam at dui ultrices commodo. Donec et tempor enim. Aenean varius lectus ac nibh hendrerit id imperdiet metus condimentum. Nunc sit amet nunc elit, ac pharetra massa. Vestibulum sodales sollicitudin lectus eget vestibulum. Aliquam viverra pretium vestibulum. Sed at lorem purus. Aliquam mollis, risus accumsan fringilla posuere, arcu eros pretium massa, sit amet pharetra dolor felis varius metus. In placerat diam eget dolor tincidunt at rutrum lacus ultrices.Nunc vel varius nunc. Aliquam cursus sagittis eleifend. Sed venenatis, libero ut tincidunt porta, ipsum massa facilisis nulla, sed ultrices nisi quam id enim. Vivamus at mauris est, sed consectetur libero. Donec non nunc lectus, nec cursus tortor. Nam nec augue fringilla urna dictum posuere at nec ante. Ut nec magna nibh, dignissim suscipit lectus. Cras bibendum fringilla laoreet. Aenean ut mi nibh, id tempus velit. Morbi congue lacus eu lectus placerat tincidunt. Nullam aliquet enim ut erat luctus faucibus. Maecenas libero justo, placerat quis dapibus a, venenatis tempus ante. Proin eget erat sem, id varius libero.Praesent pulvinar pharetra varius. Integer non erat porta nunc dictum sodales et at est. Praesent id lobortis metus. Aliquam justo odio, hendrerit at fermentum eu, congue eget enim. Ut sem eros, commodo in varius at, lobortis a enim. Morbi facilisis lectus a massa rutrum suscipit. Aliquam sodales sodales nulla ut congue. Fusce quam dolor, fermentum rhoncus sollicitudin eu, scelerisque id lorem. Maecenas vitae felis sed mauris tincidunt egestas. Maecenas vel lorem libero. </div>
+       <div title="Documentation"> <h1>Documentation</h1><br />
+         <p>//----------------------------------------------------<br />
+           // Double Tabbed<br />
+           // by Derek Brenner<br />
+           //<br />
+           //<br />
+           // Description: J Query plugin that creates an Easy to use tab system that will <br />
+           // auto convert to a mobile version if a phone is detected.<br />
+           //<br />
+           // FEATURES<br />
+           //   -Converts simple html code into tabed content<br />
+           //   -Mobile ready<br />
+           //<br />
+           // Mobile<br />
+           //   - first h1 will be the header<br />
+           //   -Each page div should have a h1 in it<br />
+           //<br />
+           // Setup<br />
+           //   -paste into head:&lt;script src=&quot;http://code.jquery.com/jquery-latest.js&quot;&gt;&lt;/script&gt;<br />
+           //   -paste into head:&lt;script type=&quot;text/javascript&quot; src=&quot;https://raw.github.com/Derekbrenner/doubleTabbed/master/doubleTabbed.js&quot;&gt;&lt;/script&gt;<br />
+           //   -paste into head:&lt;script type=&quot;text/javascript&quot;&gt;$(&quot;document&quot;).ready(function(){$(&quot;#yourDivName&quot;).doubleTabbed({'frontPage':'yourPageTitle'});});&lt;/script&gt;<br />
+           //   -create a div with an id of your choosing that wraps your content<br />
+           //   -change #yourDivName in the last code pasted to the id of your main div<br />
+           //   -change yourPageTitle to the title of the page u want defaut<br />
+           //   -create sub div's with the title propertie = to the page name<br />
+           //   -each div should have an H1 element in it and some content<br />
+           //   - make sure the css file is in the same directory(CHANGE THIS TO GRAB FROM GIT and option to overide for custom theme)<br />
+           //<br />
+           //  PROPERTIES (size should probably be css)<br />
+           //     WORKING<br />
+           //	-browser:  can be set to mobile if you want it to always be mobile<br />
+           //	-frontPage:  set it equal to the title of the page you want to be default loaded<br />
+           //     Not working<br />
+           //	-transition<br />
+           //	-mobile theme<br />
+           //----------------------------------------------------<br />
+         </p>
+         <p>All functions are contained in the var methods.  Example:</p>
+         <p>var methods = {<br />
+           sample1 : function( ) {return this.each(function(){//code})}, <br />
+           sample2 : function( ) {//code}<br />
+           };</p>
+         <p>----Functions Documentation:</p>
+         <p>init : function( options ) {<br />
+           -first function called, checks browser and sets up the tabs<br />
+           -sets up the paramaters<br />
+           -calls the browser sniff to check for a mobile device<br />
+           -calls the create nav<br />
+           -calls either regSetup or mobileStup</p>
+         <p>createNav : function( ) { <br />
+           -loops through children div elements of the Main Div<br />
+           -for every child div a &lt;li&gt;&lt;a href&gt;&lt;/a&gt;&lt;/li&gt; in a &lt;ul&gt;  is made<br />
+           -&lt;li title=&quot;pageTitle&quot; &gt; &lt;a href=&quot;mainDivId-pageTitle&quot; data-transition=&quot;slide&quot;&gt;PageTitle&lt;/a&gt;&lt;/li&gt;<br />
+           -the content of each link is the title of a coresponding child div</p>
+         <p>hide : function( ) { <br />
+           -simple function for testing<br />
+         </p>
+         <p>regSetup : function(settings) {<br />
+           -loads in the css for desk top<br />
+           -&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;doubleTabbedStyle.css&quot; /&gt;<br />
+           -adds css classes to the needed elements<br />
+           -class='doubleTabbedNav' to ul nav<br />
+           -sets the current button css class to current<br />
+           -hides content , shows the front page<br />
+           - Checks if there a front page set or does the front page given exist<br />
+           -if not set the front page to the first div<br />
+           -binds onClick to nav which calls he link ckicked function </p>
+         <p>linkClicked : function(event) {<br />
+           -Vars<br />
+           -$mainDiv this is the div that double tabbed was called on<br />
+           -$linkClicked<br />
+           -$currentContent is the page being currently displayed<br />
+           -$nextPage page that will be transitioned to<br />
+           -manages page transitions and link css<br />
+           -called when a link is clicked</p>
+         <p>browserSniff : function(settings) {<br />
+           -if you are on a phone sets the propertie<br />
+           -settings.browser='mobile'; </p>
+         <p>mobileSetup : function( ) {<br />
+           -Lodes the mobile css<br />
+           -loads the mobile jquery:ajax<br />
+           -Puts the data-role='page' on each sub div<br />
+           -moves content into a content div<br />
+           -adds the proper href to all links<br />
+           -Put proper tags in nav<br />
+           -ad the data-role='controlgrup' to the ul nav id=$navPageId, <br />
+           -$navPageId=MainDivId_mobilenav<br />
+           -loop through all links and find the div with a corasponding title<br />
+  <br />
+           -set up the first page with nav by creating an extra div data-role=&quot;page&quot;<br />
+           - also adds header and content div to this</p>
+         <p> -loop through all links and find the div with a corasponding title<br />
+           -then add the data role page and the id= page name  ie mainDivId_titleOfPage<br />
+           -call createMobileContent on all pages exept the nav page</p>
+         <p>&nbsp;</p>
+         <p>createMobileContent : function($navPageId ) {<br />
+           -Sets up a sub div of the main tabbed div as a mobile page<br />
+           -create a div for the content<br />
+           -then puts everything previously in the sub div inside it<br />
+           -creates a div for the header and puts the any h1 element inside it</p>
+         <p>exampleFunction : function( ) {<br />
+           -for copy and paste purposes</p>
+         <p>Control section not in methods var<br />
+           -the method is passed in as an argument to the plugin</p>
+         <p>end;</p>
+         <p></p>
+       </div>
        <div title="Code"> <h1>Code</h1><code> 
-       	
+       	ih
        </code> </div>
     </div>
 </body>
